@@ -1,0 +1,192 @@
+TBI-HemoCT MASTER DATASET AUDIT REPORT
+======================================================================
+
+Dataset:
+datasets\TBI-HemoCT
+
+This report consolidates the filename/CSV audit, image-ID audit,
+and full image-integrity audit. The raw dataset was not modified.
+
+1. DATASET STRUCTURE AND FILE COUNTS
+----------------------------------------------------------------------
+Any(normal): 10,000 PNG files
+Epidural: 10,000 PNG files
+Intraparenchymal: 10,000 PNG files
+Intraventricular: 13,242 PNG files
+Subarachnoid: 10,000 PNG files
+Subdural: 10,000 PNG files
+TOTAL PNG FILES ON DISK: 63,242
+
+2. CSV METADATA SUMMARY
+----------------------------------------------------------------------
+CSV rows: 59,999
+CSV columns: 5
+Columns:
+  - File Name
+  - Destination
+  - Label
+  - Placed in multiple locations
+  - All positive locations
+
+Label distribution:
+  Label 1: 49,999
+  Label 0: 10,000
+
+Destination distribution:
+  intraparenchymal: 10,000
+  intraventricular: 10,000
+  normal: 10,000
+  subarachnoid: 10,000
+  subdural: 10,000
+  epidural: 9,999
+
+Placed in multiple locations:
+  False: 35,049
+  True: 24,950
+
+3. IMAGE-ID / GROUPING AUDIT
+----------------------------------------------------------------------
+Distinct image IDs overall: 10,000
+ID-summary rows: 52,711
+
+Folder ID coverage:
+  Any(normal): 10,000 distinct IDs
+  Epidural: 2,711 distinct IDs
+  Intraparenchymal: 10,000 distinct IDs
+  Intraventricular: 10,000 distinct IDs
+  Subarachnoid: 10,000 distinct IDs
+  Subdural: 10,000 distinct IDs
+
+Number of folders represented per image ID:
+  5 folder(s): 7,289 IDs
+  6 folder(s): 2,711 IDs
+
+Augmented-file counts by folder:
+  Any(normal): 0
+  Epidural: 7,289
+  Intraparenchymal: 0
+  Intraventricular: 0
+  Subarachnoid: 0
+  Subdural: 0
+
+4. CSV ↔ DISK RECONCILIATION
+----------------------------------------------------------------------
+Unique CSV filenames: 59,999
+Unique disk filenames: 63,242
+Disk filenames missing from CSV: 3,243
+CSV filenames missing on disk: 0
+
+Disk files absent from CSV by folder:
+  Epidural: 1
+  Intraventricular: 3,242
+
+Known unlogged physical files:
+  - Epidural: nan.png (1 file)
+  - Intraventricular: 3,242 files
+  - Total unlogged physical files: 3,243
+
+The 3,242 unlogged Intraventricular files were found to be
+byte-identical to logged Intraventricular files, indicating
+duplicate physical copies rather than additional unique image content.
+
+The unlogged Epidural nan.png is a valid readable PNG and was
+not found to be identical to a logged Epidural file.
+
+5. LABEL CONSISTENCY CHECKS
+----------------------------------------------------------------------
+Normal rows verified consistently: 10,000
+Expected normal rows: 10,000
+
+Positive rows checked: 49,999
+
+Filename vs All positive locations:
+  One mismatch was found:
+  ID_8_subdural_UNIQUE.png
+  Filename indicates: subdural
+  CSV All positive locations:
+  intraparenchymal- intraventricular- subdural
+
+No manual correction was applied; the raw metadata was preserved.
+
+6. FULL IMAGE INTEGRITY AUDIT
+----------------------------------------------------------------------
+TBI-HemoCT FULL IMAGE INTEGRITY AUDIT
+============================================================
+
+PNG files found: 63242
+
+IMAGE DIMENSIONS
+----------------------------------------
+(408, 374): 2
+(430, 404): 1
+(462, 462): 6
+(464, 464): 7
+(512, 512): 63210
+(638, 490): 9
+(666, 512): 4
+(768, 768): 3
+
+IMAGE MODES
+----------------------------------------
+L: 63242
+
+DATA TYPES
+----------------------------------------
+uint8: 63242
+
+GLOBAL PIXEL RANGE
+----------------------------------------
+Minimum: 0
+Maximum: 255
+
+ZERO-BYTE FILES
+----------------------------------------
+Total: 0
+
+BLANK IMAGES (ALL PIXELS ZERO)
+----------------------------------------
+Total: 0
+
+CONSTANT-VALUE IMAGES
+----------------------------------------
+Total: 0
+
+READ / PROCESSING ERRORS
+----------------------------------------
+Total: 0
+
+7. IMPORTANT ML IMPLICATIONS
+----------------------------------------------------------------------
+1. Do not perform a naive image-level random train/validation/test split.
+   The dataset contains repeated filenames, augmentation variants,
+   multiple folder placements, and shared image IDs.
+
+2. Use image ID as a grouping signal when constructing splits.
+   All files sharing the same image ID should remain in the same
+   split unless a stronger verified patient-level identifier is available.
+
+3. Do not treat folder membership as proof of independent patients.
+   The same image ID occurs across multiple folders.
+
+4. Do not delete the 3,242 unlogged Intraventricular files merely
+   because they are absent from the CSV. They are byte-identical
+   duplicates of logged Intraventricular files and are part of
+   the original physical dataset.
+
+5. Do not rename or delete Epidural nan.png at this stage.
+   It is a valid PNG but is anomalous with respect to the CSV.
+
+6. Do not resize, delete, or modify the 32 non-512x512 images merely
+   because their dimensions differ. All were readable and passed
+   the image-integrity checks.
+
+7. The raw dataset should remain untouched. Any cleaning or
+   preprocessing should be performed in a separate derived dataset.
+
+8. FINAL AUDIT STATUS
+----------------------------------------------------------------------
+Dataset integrity audit completed.
+Raw TBI-HemoCT dataset was not modified.
+
+Next stage: review the audit findings before any preprocessing,
+deduplication, splitting, or model training.

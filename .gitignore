@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Medical datasets - DO NOT upload to GitHub
+datasets/
+
+# Dataset archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Medical imaging files
+*.nii
+*.nii.gz
+*.dcm
+
+# Model weights
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment/secrets
+.env
+.env.*
+!.env.example

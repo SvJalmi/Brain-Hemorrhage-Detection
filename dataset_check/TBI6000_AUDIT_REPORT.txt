@@ -1,0 +1,272 @@
+============================================================
+TBI-6000 DATASET AUDIT REPORT
+============================================================
+
+Project:
+Brain Hemorrhage Detection, Classification and Segmentation
+
+Dataset:
+TBI-6000
+
+Audit date:
+2026-09-08
+
+============================================================
+1. DATASET STRUCTURE
+============================================================
+
+Dataset folder:
+datasets\TBI-6000
+
+Classes found:
+1. epidural
+2. intraparenchymal
+3. intraventricular
+4. normal
+5. subarachnoid
+6. subdural
+
+Images per class:
+epidural:          1000
+intraparenchymal: 1000
+intraventricular: 1000
+normal:            1000
+subarachnoid:      1000
+subdural:          1000
+
+Total images:
+6000
+
+============================================================
+2. FILE FORMAT
+============================================================
+
+PNG files:
+6000
+
+Other image extensions:
+None
+
+Image mode:
+L (grayscale): 6000
+
+Image data type:
+uint8: 6000
+
+============================================================
+3. IMAGE DIMENSIONS
+============================================================
+
+512 x 512:
+5999 images
+
+512 x 666:
+1 image
+
+Unusual image:
+subdural\ID_315_subdural_UNIQUE.png
+
+The unusual 512 x 666 image was visually inspected
+and appeared to be a valid CT brain image.
+
+No resizing or modification was performed.
+
+============================================================
+4. IMAGE INTEGRITY
+============================================================
+
+Corrupted / unreadable images:
+0
+
+Zero-byte image files:
+0
+
+Completely blank images:
+0
+
+Constant-value images:
+0
+
+Read / processing errors during full pixel audit:
+0
+
+Global pixel range:
+0 to 255
+
+============================================================
+5. PIXEL-LEVEL AUDIT
+============================================================
+
+All 6000 images were successfully processed.
+
+All images:
+- Grayscale
+- uint8
+- Readable
+
+No completely blank images were found.
+
+No constant-value images were found.
+
+============================================================
+6. DUPLICATE ANALYSIS
+============================================================
+
+Total PNG files:
+6000
+
+Unique file hashes:
+5950
+
+Exact duplicate groups:
+47
+
+Files involved in duplicate groups:
+97
+
+No files were deleted or modified.
+
+============================================================
+7. DIFFERENT-ID PIXEL-IDENTICAL DUPLICATES
+============================================================
+
+Four duplicate groups contain images with different IDs
+but exactly identical decoded pixel arrays.
+
+Group 29:
+subarachnoid
+ID_1254_subarachnoid_UNIQUE.png
+ID_373_subarachnoid_UNIQUE.png
+
+Group 30:
+intraparenchymal
+ID_1603_intraparenchymal_UNIQUE.png
+ID_487_intraparenchymal_UNIQUE.png
+
+Group 33:
+intraventricular
+ID_110_intraventricular_UNIQUE.png
+ID_1556_intraventricular_UNIQUE.png
+
+Group 39:
+intraventricular
+ID_1651_intraventricular_UNIQUE.png
+ID_233_intraventricular_UNIQUE.png
+
+Pixel-level verification confirmed that all four
+pairs are exactly pixel-identical.
+
+The IDs were not assumed to represent different patients.
+
+============================================================
+8. ORIGINAL VS AUGMENTED IMAGES
+============================================================
+
+Based on the filename convention "_aug_":
+
+Epidural:
+Total:       1000
+Original:     277
+Augmented:    723
+
+Intraparenchymal:
+Total:       1000
+Original:    1000
+Augmented:      0
+
+Intraventricular:
+Total:       1000
+Original:    1000
+Augmented:      0
+
+Normal:
+Total:       1000
+Original:    1000
+Augmented:      0
+
+Subarachnoid:
+Total:       1000
+Original:    1000
+Augmented:      0
+
+Subdural:
+Total:       1000
+Original:    1000
+Augmented:      0
+
+Overall:
+Total:       6000
+Original:    5277
+Augmented:    723
+
+Original percentage:
+87.95%
+
+Augmented percentage:
+12.05%
+
+Important:
+"Original" and "Augmented" are determined from filename
+conventions only. They do not establish patient-level
+independence.
+
+============================================================
+9. DATA LEAKAGE CONSIDERATION
+============================================================
+
+The dataset contains exact duplicate images and
+augmentation-derived images.
+
+Therefore, a naive image-level random train/validation/test
+split should NOT be used.
+
+Related duplicate and augmentation images should be kept
+within the same data split during future experiments.
+
+The duplicate metadata report is stored at:
+
+dataset_check\tbi6000_duplicate_metadata.csv
+
+============================================================
+10. RAW DATA POLICY
+============================================================
+
+During this audit:
+
+- No images were deleted.
+- No images were renamed.
+- No images were resized.
+- No images were converted.
+- No images were normalized.
+- No images were moved.
+- No images were modified.
+
+The original dataset remains intact.
+
+============================================================
+11. FINAL AUDIT CONCLUSION
+============================================================
+
+TBI-6000 PASSES the basic raw image integrity audit.
+
+The dataset contains no detected corrupted, unreadable,
+blank, or constant-value images.
+
+However, the following characteristics must be documented
+and considered during experimental design:
+
+1. One image has dimensions 512 x 666.
+2. There are 47 exact duplicate groups involving 97 files.
+3. Four groups contain pixel-identical images with different IDs.
+4. 723 files are explicitly marked as augmented.
+5. All explicitly augmented files are in the epidural class.
+6. Patient-level independence cannot be established from
+   filenames alone.
+
+Therefore, TBI-6000 is suitable for continued research use,
+provided that duplicate/augmentation relationships are
+considered when constructing experimental data splits.
+
+============================================================
+END OF TBI-6000 AUDIT REPORT
+============================================================
