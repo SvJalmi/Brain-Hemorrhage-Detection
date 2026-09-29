@@ -43,3 +43,6 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Preprocessed medical data
+preprocessed_data/
