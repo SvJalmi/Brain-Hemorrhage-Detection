@@ -1,0 +1,6 @@
+class,dice,iou,sensitivity,precision,tp,fp,fn
+epidural,0.0,0.0,0.0,,0,0,8678
+intraparenchymal,0.0,0.0,0.0,,0,0,97207
+intraventricular,0.0,0.0,0.0,,0,0,22543
+subarachnoid,0.0,0.0,0.0,,0,0,39863
+subdural,0.0,0.0,0.0,,0,0,70774

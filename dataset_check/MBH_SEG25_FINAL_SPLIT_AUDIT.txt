@@ -1,0 +1,90 @@
+======================================================================
+MBH-SEG25 FINAL SPLIT AUDIT
+======================================================================
+
+Total cases: 192
+Unique case IDs: 192
+
+SPLIT COUNTS
+----------------------------------------------------------------------
+train: 134
+validation: 29
+test: 29
+
+ANNOTATION COUNTS
+----------------------------------------------------------------------
+annotation_count   2   3  4
+split                      
+test              16  13  0
+train             75  53  6
+validation        20   9  0
+
+SUBTYPE PRESENCE BY CASE
+----------------------------------------------------------------------
+
+TRAIN (134 cases)
+epidural: 21
+intraparenchymal: 96
+intraventricular: 83
+subarachnoid: 83
+subdural: 67
+
+VALIDATION (29 cases)
+epidural: 1
+intraparenchymal: 20
+intraventricular: 21
+subarachnoid: 19
+subdural: 15
+
+TEST (29 cases)
+epidural: 5
+intraparenchymal: 22
+intraventricular: 18
+subarachnoid: 20
+subdural: 18
+
+VOLUME DIMENSIONS
+----------------------------------------------------------------------
+shape_x  shape_y  shape_z
+512      512      30         32
+                  31         22
+                  32         22
+                  29         16
+                  34         15
+                  36         13
+                  38         11
+                  28         10
+                  26          9
+                  35          6
+                  27          6
+                  33          6
+                  37          5
+                  39          4
+                  46          3
+                  25          3
+                  42          2
+                  44          2
+                  22          2
+                  40          1
+                  58          1
+                  23          1
+
+VOXEL SPACING
+----------------------------------------------------------------------
+XY spacing range: 0.371094 to 0.683594 mm
+Z spacing range: 3.148766 to 6.502367 mm
+
+FILE EXISTENCE
+----------------------------------------------------------------------
+Missing CT images: 0
+Missing annotation files: 0
+
+SPLIT LEAKAGE CHECK
+----------------------------------------------------------------------
+Cases appearing in multiple splits: 0
+
+======================================================================
+FINAL STATUS
+======================================================================
+MBH-SEG25 FINAL SPLIT AUDIT: PASSED
+======================================================================

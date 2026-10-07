@@ -46,3 +46,15 @@ Thumbs.db
 
 # Preprocessed medical data
 preprocessed_data/
+
+# nnU-Net generated workspace
+nnunet/nnUNet_preprocessed/
+nnunet/nnUNet_results/
+
+# nnU-Net generated dataset files
+nnunet/nnUNet_raw/*/imagesTr/
+nnunet/nnUNet_raw/*/labelsTr/
+nnunet/nnUNet_raw/*/imagesTs/
+
+# Generated MBH overlay visualizations
+dataset_check/MBH_overlay_raw/
