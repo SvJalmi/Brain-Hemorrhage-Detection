@@ -1,0 +1,7 @@
+class,target_voxels,predicted_voxels,tp,fp,fn,dice,iou,sensitivity,precision
+background,62937639,63176704,62937639,239065,0,0.9981043789761487,0.9962159311128355,1.0,0.9962159311128355
+epidural,8678,0,0,0,8678,0.0,0.0,0.0,nan
+intraparenchymal,97207,0,0,0,97207,0.0,0.0,0.0,nan
+intraventricular,22543,0,0,0,22543,0.0,0.0,0.0,nan
+subarachnoid,39863,0,0,0,39863,0.0,0.0,0.0,nan
+subdural,70774,0,0,0,70774,0.0,0.0,0.0,nan

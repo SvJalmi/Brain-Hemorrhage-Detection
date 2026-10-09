@@ -1,0 +1,10 @@
+category,cases,percentage_of_all_cases,summary_type,subtype,cases_with_subtype,median_volume_ml,mean_volume_ml,max_volume_ml,total_voxels
+Small <1 mL,14.0,7.291666666666667,size_category,,,,,,
+Small 1-5 mL,32.0,16.666666666666668,size_category,,,,,,
+Medium 5-20 mL,56.0,29.166666666666668,size_category,,,,,,
+Large >=20 mL,90.0,46.875,size_category,,,,,,
+,,,subtype,epidural,23.0,8.865267290261507,16.294151333984175,117.02208978476847,319308.0
+,,,subtype,intraparenchymal,127.0,9.895839652281483,22.41080574055495,197.80995864597904,2426986.0
+,,,subtype,intraventricular,107.0,2.5145043083008023,9.07274933746311,67.29084146238863,792128.0
+,,,subtype,subarachnoid,112.0,2.376591258820307,8.45864120170784,75.98080811446266,775515.0
+,,,subtype,subdural,81.0,5.577802658081055,18.791040693293933,184.19818126449172,1237653.0

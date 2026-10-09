@@ -58,3 +58,7 @@ nnunet/nnUNet_raw/*/imagesTs/
 
 # Generated MBH overlay visualizations
 dataset_check/MBH_overlay_raw/
+
+# Accidental empty file and generated sample image
+/0
+/sample_batch.png
