@@ -1,0 +1,131 @@
+BRAIN HEMORRHAGE DETECTION PROJECT
+CONSOLIDATED PREPROCESSING AUDIT REPORT
+
+Audit date: 10 October 2026
+Scope: Classification data preparation, segmentation data preparation, and nnU-Net preprocessing verification.
+
+1. EXECUTIVE SUMMARY
+
+The recorded preprocessing and data-integrity checks passed for TBI-6000, TBI-HemoCT, and MBH-Seg25. Leakage checks found no base-ID or file-hash overlap across prepared classification splits, and MBH-Seg25 case splits contain no case overlap. nnU-Net preprocessing outputs and five-fold split configuration are present and consistent with the checks recorded below.
+
+This report verifies data preparation and preprocessing only. It does NOT establish successful model training, clinically reliable predictions, or validated segmentation performance. Current segmentation experiments have not produced a successful foreground segmentation result, and nnU-Net training remains pending because CPU training was too slow.
+
+2. TBI-6000 CLASSIFICATION DATASET
+
+- 6,000 images; 1,000 images per class.
+- Mostly 512 x 512 grayscale PNGs; one valid image was 512 x 666.
+- Corrupt/blank images: 0.
+- Duplicate image hashes existed within the dataset, but none crossed the final splits.
+- Leakage-safe split: train 2,416; validation 1,790; test 1,794; total 6,000.
+- Prepared CSVs:
+  preprocessing\classification\prepared\tbi6000_train.csv
+  preprocessing\classification\prepared\tbi6000_validation.csv
+  preprocessing\classification\prepared\tbi6000_test.csv
+- Invalid labels: 0 per split.
+- Duplicate paths within each split: 0.
+- Wrong split labels: 0.
+- Missing image paths: 0.
+- Cross-split base-ID overlap: 0.
+- Cross-split file-hash overlap: 0.
+- A sample from the dataset loader loaded successfully as RGB at 512 x 512 with the expected class index.
+- Audit report: dataset_check\TBI6000_AUDIT_REPORT.txt
+- Status: PASSED for recorded integrity and split checks.
+
+3. TBI-HemoCT CLASSIFICATION DATASET
+
+- 63,242 physical PNG files; source metadata contained 59,999 rows.
+- Grouped prepared labels: 52,710 rows.
+- Final leakage-safe table: 52,485 rows after removing 225 rows associated with conflicting file hashes.
+- Split: train 43,716; validation 4,384; test 4,385; total 52,485.
+- Prepared CSVs:
+  preprocessing\classification\prepared\train.csv
+  preprocessing\classification\prepared\validation.csv
+  preprocessing\classification\prepared\test.csv
+- Prepared split row counts match the master split.
+- Split labels are correct; duplicate paths within each split: 0.
+- Cross-split file-hash overlap: 0; cross-split base-ID overlap: 0.
+- Label vectors match subtype columns for every row (0 mismatches).
+- Labels are binary; subtype labels are not missing.
+- Prepared records and labels match the master leakage-safe CSV for train, validation, and test.
+
+C1 baseline classification experiment:
+- Model: frozen EfficientNet-B0.
+- Best validation Macro-F1: 0.3055 at epoch 2.
+- Test set: 4,385 images.
+- Default 0.5 threshold: Macro-F1 0.3110; Micro-F1 0.3917; Macro AUROC 0.7282; Macro AUPRC 0.4016.
+- Validation-selected class thresholds: Macro-F1 0.4544; Micro-F1 0.4999; Macro AUROC 0.7282; Macro AUPRC 0.4016.
+- Thresholds were selected on validation data and then evaluated on test data.
+- Grad-CAM output: results\classification\gradcam\gradcam_intraparenchymal.png. This visualization is not proof of accurate lesion localization.
+- Full fine-tuning on CPU was stopped because it was too slow; no C2 checkpoint was produced.
+- Metric files:
+  results\classification\c1_frozen_test\overall_metrics.csv
+  results\classification\c1_frozen_test\per_class_metrics.csv
+  results\classification\c1_frozen_test\thresholds.csv
+- Status: PASSED for recorded prepared-data and leakage checks. C1 is a baseline, not a claim of clinical readiness.
+
+4. MBH-Seg25 SEGMENTATION DATASET
+
+- 192 cases; 192 CT scans and 471 expert annotation files (2–4 annotations per case).
+- Label map: 0 background, 1 EDH, 2 IPH, 3 IVH, 4 SAH, 5 SDH.
+- annot_3 was selected as the reference annotation for preparation and volume analysis; it is not treated as perfect ground truth.
+- Inter-annotator subtype-presence disagreement: 44.8%.
+- Case split: train 134; validation 29; test 29; total 192; case overlap: 0.
+- 663 source files checked; no hash mismatches reported.
+- Duplicate case IDs: 0; duplicate image paths: 0; missing CT scans: 0; missing listed annotations: 0; annotation-count mismatches: 0.
+- Across 471 annotation files: CT/mask shape mismatches 0; spacing mismatches above 0.01 mm: 0; affine mismatches above 0.01: 0; invalid label values: 0.
+- All cases have 512 x 512 in-plane dimensions; slice count varies.
+- In-plane spacing range: approximately 0.371094–0.683594 mm.
+- Z-spacing range: approximately 3.148766–6.502367 mm.
+- Some source CT intensities are outside typical HU ranges. Original source scans were not clipped.
+- Audit report: dataset_check\MBH_SEG25_FINAL_SPLIT_AUDIT.txt
+- Status: PASSED for recorded source-integrity, case-split, and geometry checks.
+
+Reference-mask lesion-volume analysis:
+- Output: results\segmentation\mbh_seg25_lesion_size_analysis.csv
+- Summary: results\segmentation\mbh_seg25_lesion_size_analysis_summary.csv
+- Reference annotation volumes: minimum 0.1248 mL; median 17.5274 mL; mean 34.6936 mL; maximum 260.2476 mL.
+- Cases below 1 mL: 14; 1–5 mL: 32; 5–20 mL: 56; at least 20 mL: 90.
+- Cases below 5 mL: 46/192 (23.96%).
+- These bins are descriptive categories, not clinical thresholds. These are reference-mask statistics, not model-estimated volumes.
+
+5. nnU-NET PREPROCESSING VERIFICATION
+
+- nnU-Net v2 is installed.
+- Raw dataset: nnunet\nnUNet_raw\Dataset501_MBHSeg25
+- Labels: background 0, epidural 1, intraparenchymal 2, intraventricular 3, subarachnoid 4, subdural 5.
+- Channel 0 is CT; file ending is .nii.gz; dataset.json declares 134 training cases.
+- 134 training images were copied to imagesTr and 134 corresponding reference masks to labelsTr.
+- Copied CT/mask shape mismatches: 0; spacing mismatches: 0; affine mismatches: 0; invalid label masks: 0.
+- Source files were not modified by preparation.
+
+Preprocessed outputs in nnunet\nnUNet_preprocessed\Dataset501_MBHSeg25:
+- nnUNetPlans_2d: 134 image arrays, 134 segmentation arrays, 134 metadata files.
+- nnUNetPlans_3d_fullres: 134 image arrays, 134 segmentation arrays, 134 metadata files.
+- Arrays use .b2nd files; 268 .b2nd files per configuration counts both image and segmentation arrays.
+
+Five-fold split file: nnunet\nnUNet_preprocessed\Dataset501_MBHSeg25\splits_final.json
+- Fold 0: 107 train / 27 validation; overlap 0.
+- Fold 1: 107 train / 27 validation; overlap 0.
+- Fold 2: 107 train / 27 validation; overlap 0.
+- Fold 3: 107 train / 27 validation; overlap 0.
+- Fold 4: 108 train / 26 validation; overlap 0.
+- Status: PASSED for recorded preprocessing-output counts and split-file checks.
+
+6. LIMITATIONS AND REMAINING WORK
+
+1. nnU-Net preprocessing is verified, but successful nnU-Net training and evaluation have not been completed.
+2. Earlier small U-Net and imbalance-aware experiments collapsed to background and did not produce foreground predictions.
+3. Full EfficientNet fine-tuning on the local CPU was stopped due to runtime constraints; frozen EfficientNet-B0 is the current classification baseline.
+4. Segmentation must be evaluated on held-out test cases after successful training. Report class-wise Dice, sensitivity/recall, and suitable volume/error metrics, documenting empty-mask handling.
+5. Reference annotation uncertainty must be acknowledged. annot_3 is a selected reference, not guaranteed ground truth.
+6. Reference-mask volume analysis must not be described as automated model volume estimation.
+7. Grad-CAM must not be presented as proof of accurate localization.
+8. No clinical validation or clinical deployment claim is supported by these checks.
+
+7. OVERALL AUDIT CONCLUSION
+
+Based on the checks recorded here, preprocessing and data-integrity checks are complete for all three datasets, and nnU-Net 2D and 3D full-resolution preprocessing outputs and five-fold split configuration are present and consistent.
+
+The remaining major technical task is successful segmentation model training and held-out evaluation. The current work supports reporting dataset preparation, leakage-safe splits, preprocessing validation, a baseline classification experiment, Grad-CAM visualization, and reference-mask lesion-volume analysis. It does not support claiming a successful segmentation model or clinical readiness.
+
+End of report.

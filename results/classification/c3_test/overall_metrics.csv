@@ -1,0 +1,2 @@
+dataset,total_samples,normal_samples,normal_cases_max_probability_ge_0_5,normal_mean_max_hemorrhage_probability,threshold,note
+TBI-6000,6000,1000,66,0.11674828082323074,0.5,C2 has five independent hemorrhage sigmoid outputs and no normal output. Normal cases are reported separately; this is not a six-class classification evaluation.

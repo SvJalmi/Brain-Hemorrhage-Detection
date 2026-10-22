@@ -62,3 +62,13 @@ dataset_check/MBH_overlay_raw/
 # Accidental empty file and generated sample image
 /0
 /sample_batch.png
+# Generated classification preprocessing outputs
+preprocessing/classification/prepared/
+preprocessing/classification/*manifest*.csv
+preprocessing/classification/*split*.csv
+preprocessing/classification/tbihemoct_labels.csv
+
+# Generated Python caches and local artifacts
+**/__pycache__/
+/0.01
+*.npy

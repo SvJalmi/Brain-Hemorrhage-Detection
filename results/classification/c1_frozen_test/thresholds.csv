@@ -1,0 +1,6 @@
+class,validation_selected_threshold
+epidural,0.16
+subdural,0.32
+subarachnoid,0.25
+intraparenchymal,0.27
+intraventricular,0.38

@@ -1,0 +1,46 @@
+========================================================================
+C3 — CROSS-DATASET EVALUATION: C2 ON TBI-6000
+========================================================================
+Device: cuda:1
+GPU: NVIDIA RTX 6000 Ada Generation
+Dataset: /home/cse1027/Brain_Hemorrhage_Project/datasets/TBI-6000
+Checkpoint: /home/cse1027/Brain_Hemorrhage_Project/models/classification/best_efficientnet_b0_c2_full_finetune_tbihemoct.pth
+
+Dataset counts:
+  epidural              1000
+  intraparenchymal      1000
+  intraventricular      1000
+  normal                1000
+  subarachnoid          1000
+  subdural              1000
+  TOTAL                 6000
+
+Loaded C2 checkpoint epoch: 9
+
+Running inference...
+  Batch 25/188
+  Batch 50/188
+  Batch 75/188
+  Batch 100/188
+  Batch 125/188
+  Batch 150/188
+  Batch 175/188
+  Batch 188/188
+
+Per-class metrics (threshold = 0.5):
+epidural             F1=0.7714 Precision=0.9320 Sensitivity=0.6580 AUROC=0.9365 AUPRC=0.8584
+subdural             F1=0.7922 Precision=0.7211 Sensitivity=0.8790 AUROC=0.9695 AUPRC=0.8906
+subarachnoid         F1=0.7221 Precision=0.6614 Sensitivity=0.7950 AUROC=0.9422 AUPRC=0.8183
+intraparenchymal     F1=0.8429 Precision=0.8604 Sensitivity=0.8260 AUROC=0.9692 AUPRC=0.9069
+intraventricular     F1=0.9107 Precision=0.8940 Sensitivity=0.9280 AUROC=0.9909 AUPRC=0.9674
+
+Normal-case assessment:
+  Normal samples: 1000
+  Mean maximum hemorrhage probability on normal images: 0.1167
+
+Saved:
+  /home/cse1027/Brain_Hemorrhage_Project/results/classification/c3_test/per_class_metrics.csv
+  /home/cse1027/Brain_Hemorrhage_Project/results/classification/c3_test/overall_metrics.csv
+  /home/cse1027/Brain_Hemorrhage_Project/results/classification/c3_test/image_predictions.csv
+
+Note: This evaluates the existing C2 model without retraining or threshold tuning.

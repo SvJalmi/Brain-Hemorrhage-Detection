@@ -1,0 +1,7 @@
+reference_class,background,epidural,intraparenchymal,intraventricular,subarachnoid,subdural,row_total
+background,60869132,240,32214,15096,137322,123584,61177588
+epidural,200,0,15,0,9,160,384
+intraparenchymal,21590,1,63720,4523,5101,2723,97658
+intraventricular,3307,0,2190,5411,1144,17,12069
+subarachnoid,7297,6,1141,337,5846,1253,15880
+subdural,26744,5,1986,367,2423,6592,38117

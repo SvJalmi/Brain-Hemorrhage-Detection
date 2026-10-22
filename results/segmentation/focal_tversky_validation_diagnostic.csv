@@ -1,0 +1,7 @@
+class,tp,fp,fn,dice,sensitivity,target_pixels,predicted_pixels
+background,61177588,164108,0,0.9986605537133241,1.0,61177588,61341696
+epidural,0,0,384,0.0,0.0,384,0
+intraparenchymal,0,0,97658,0.0,0.0,97658,0
+intraventricular,0,0,12069,0.0,0.0,12069,0
+subarachnoid,0,0,15880,0.0,0.0,15880,0
+subdural,0,0,38117,0.0,0.0,38117,0
